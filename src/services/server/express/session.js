@@ -1,6 +1,5 @@
 import session from 'express-session';
 import connect from 'connect-mongo';
-import {databaseUrl} from '../../../config';
 let MongoStore = connect(session);
 
 export default (app, databaseUrl) => {

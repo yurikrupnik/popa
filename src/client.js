@@ -9,4 +9,4 @@ const ROOT = document.getElementById('root');
 console.log('ROOT', ROOT);
 
 
-render(<div>yuri</div>, ROOT);
+render(<div>shalom</div>, ROOT);

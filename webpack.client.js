@@ -18,21 +18,25 @@ let ip = config.ip;
 let host = config.host;
 
 let HtmlWebpackPlugin = require('html-webpack-plugin');
-let plugins = [];
-
-if (env === 'production') {
-    plugins = plugins.concat( new HtmlWebpackPlugin({
+let plugins = [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+    new HtmlWebpackPlugin({
         template: 'index.ejs',
         filename: 'views/index.ejs',
         inject: 'body'
-    }));
+    })
+];
+
+if (env === 'production') {
+
 } else if (env === 'development') {
 
     plugins = [
         ...plugins,
-        new webpack.HotModuleReplacementPlugin(),
+        // new webpack.HotModuleReplacementPlugin(),
         // new ExtractTextPlugin({filename: '[name].css', disable: false, allChunks: false}),
-        new webpack.NoEmitOnErrorsPlugin(),
+        // new webpack.NoEmitOnErrorsPlugin(),
         new BrowserSyncPlugin({
             host: ip, // 'localhost',
             port: 3000,

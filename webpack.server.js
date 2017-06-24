@@ -2,6 +2,14 @@
 
 let path = require('path');
 let nodeExternals = require('webpack-node-externals');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
+let plugins = [
+    new HtmlWebpackPlugin({
+        template: 'index.ejs',
+        filename: 'views/index.ejs',
+        inject: 'body'
+    })
+];
 module.exports = {
     context: path.join(__dirname, 'src'),
     target: 'node',
@@ -23,6 +31,6 @@ module.exports = {
             }
         ]
     },
-    plugins: [],
+    plugins: plugins,
     externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
 };
