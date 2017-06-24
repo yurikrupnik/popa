@@ -1,4 +1,4 @@
 
-import app from './app';
+import server from './server';
 import {port, host} from './config';
-app.listen(port, () => console.log(`Listening on: ${host}`));
+server.listen(port, () => console.log(`Listening on: ${host}`));
