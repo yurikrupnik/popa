@@ -5,7 +5,7 @@ let compiler = webpack(webpackConfig);
 let webpackDevMiddleware = require('webpack-dev-middleware');
 let webpackHotMiddleware = require('webpack-hot-middleware');
 let options = {
-    publicPath: '/',
+    publicPath: '/public/assets/',
     noInfo: true,
     stats: {
         colors: true,

@@ -5,7 +5,4 @@ import {databaseUrl, env} from './config';
 
 expressMiddlewares(app, databaseUrl, env);
 
-app.get('*', function (req, res, next) {
-    res.render('index');
-});
 export default app;
