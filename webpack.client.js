@@ -10,7 +10,7 @@ let fs = require('fs')
 let path = require('path');
 let webpack = require('webpack');
 let BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-// let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
 let _ = require('lodash');
 let config = require('./src/config');
 let env = config.env;
@@ -21,11 +21,12 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 let plugins = [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    new ExtractTextPlugin({filename: '[name].css', disable: false, allChunks: false}),
     new HtmlWebpackPlugin({
         template: 'index.ejs',
         filename: 'views/index.ejs',
         inject: 'body'
-    })
+    }),
 ];
 
 if (env === 'production') {
@@ -63,7 +64,8 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'dist'),
         filename: '[name].js',
-        chunkFilename: '[chunkhash].chunk.js'
+        chunkFilename: '[chunkhash].chunk.js',
+        // publicPath: 'assets/'
     },
     module: {
         rules: [
@@ -72,13 +74,13 @@ module.exports = {
                 use: 'babel-loader',
                 exclude: /node_modules/,
             },
-            // {
-            //     test: /\.(css|scss)$/,
-            //     use: ExtractTextPlugin.extract({
-            //         fallback: "style-loader",
-            //         use: ['css-loader', 'sass-loader?sourceMap', 'postcss-loader']
-            //     })
-            // },
+            {
+                test: /\.(css|scss)$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: ['css-loader', 'sass-loader?sourceMap', 'postcss-loader']
+                })
+            },
             {
                 test: /\.(png|jpeg|woff|woff2|eot|ttf|svg)$/,
                 use: 'file-loader'
