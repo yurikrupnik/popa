@@ -21,7 +21,7 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 let plugins = [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new ExtractTextPlugin({filename: '[name].css', disable: false, allChunks: false}),
+    new ExtractTextPlugin({filename: 'assets/css/[name].css', disable: false, allChunks: false}),
     new HtmlWebpackPlugin({
         template: 'index.ejs',
         filename: 'views/index.ejs',
@@ -62,10 +62,9 @@ module.exports = {
     target: 'web',
     entry: './client.js',
     output: {
-        path: path.join(__dirname, 'dist'),
-        filename: '[name].js',
-        chunkFilename: '[chunkhash].chunk.js',
-        // publicPath: 'assets/'
+        path: path.join(__dirname, 'dist', 'public'),
+        filename: 'assets/js/[name].js',
+        chunkFilename: '[chunkhash].chunk.js'
     },
     module: {
         rules: [

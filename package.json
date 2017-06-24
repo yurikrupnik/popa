@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "npm run pre && NODE_ENV='development' nodemon src/index.js",
-    "pre": "NODE_ENV='development' webpack --config webpack.client.js && rm dist/main.js",
+    "pre": "NODE_ENV='development' webpack --config webpack.client.js",
     "build": "npm run build:server & npm run build:client",
     "build:server": "NODE_ENV='production' webpack -p --config webpack.server.js",
     "build:client": "NODE_ENV='production' webpack -p --config webpack.client.js",
