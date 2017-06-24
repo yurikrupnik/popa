@@ -1,5 +1,5 @@
 import express from 'express';
 
-export default (app, dist_root) => {
+export default (app) => {
     app.use(express.static('dist'));
 }

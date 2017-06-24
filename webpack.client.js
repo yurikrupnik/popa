@@ -6,8 +6,9 @@
 // require.extensions['.css'] = () => {
 //     return;
 // };
-
+let fs = require('fs')
 let path = require('path');
+let webpack = require('webpack');
 let BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 // let ExtractTextPlugin = require('extract-text-webpack-plugin');
 let _ = require('lodash');
@@ -16,13 +17,16 @@ let env = config.env;
 let ip = config.ip;
 let host = config.host;
 
-
+let HtmlWebpackPlugin = require('html-webpack-plugin');
 let plugins = [];
 
 if (env === 'production') {
-//     // plugins = plugins.concat(new webpack.optimize.UglifyJsPlugin());
+    plugins = plugins.concat( new HtmlWebpackPlugin({
+        template: 'index.ejs',
+        filename: 'views/index.ejs',
+        inject: 'body'
+    }));
 } else if (env === 'development') {
-    let webpack = require('webpack');
 
     plugins = [
         ...plugins,
@@ -55,8 +59,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'dist'),
         filename: '[name].js',
-        chunkFilename: '[chunkhash].chunk.js',
-        publicPath: '/dist/'
+        chunkFilename: '[chunkhash].chunk.js'
     },
     module: {
         rules: [
