@@ -4,12 +4,13 @@
   "description": "",
   "scripts": {
     "start": "npm run pre && NODE_ENV='development' nodemon src/index.js",
-    "pre": "NODE_ENV='development' webpack --config webpack.client.js",
+    "pre": "NODE_ENV='development' webpack --config webpack.client.js && npm run clean:main",
     "build": "npm run build:server & npm run build:client",
     "build:server": "NODE_ENV='production' webpack -p --config webpack.server.js",
     "build:client": "NODE_ENV='production' webpack -p --config webpack.client.js",
     "serve:build": "npm run build && node dist/server.bundle.js",
-    "clean": "rm -r dist"
+    "clean": "rm -r dist",
+    "clean:main": "rm -r dist/public/assets/js & rm -r dist/public/assets/css"
   },
   "author": "yuri krupnik",
   "license": "ISC",
@@ -36,7 +37,8 @@
     "react-router-dom": "^4.1.1",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

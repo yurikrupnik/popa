@@ -4,6 +4,7 @@ let path = require('path');
 let nodeExternals = require('webpack-node-externals');
 let plugins = [];
 module.exports = {
+    devtool: 'cheap-source-map',
     context: path.join(__dirname, 'src'),
     target: 'node',
     entry: './index.js',

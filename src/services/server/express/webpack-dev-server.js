@@ -1,11 +1,10 @@
-let webpackConfig = require('../../../../webpack.client');
-let webpack = require('webpack');
+import webpackConfig from '../../../../webpack.client';
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
 let compiler = webpack(webpackConfig);
-//
-let webpackDevMiddleware = require('webpack-dev-middleware');
-let webpackHotMiddleware = require('webpack-hot-middleware');
 let options = {
-    publicPath: '/',
+    publicPath: webpackConfig.output.publicPath,
     noInfo: true,
     stats: {
         colors: true,
@@ -16,11 +15,8 @@ let options = {
         modules: true
     }
 };
-let middleware = [
-    webpackHotMiddleware(compiler),
-    webpackDevMiddleware(compiler, options)
-];
 
-export default app => {
-    app.use(middleware); // only in development
+export default app => { // // only in development
+    app.use(webpackDevMiddleware(compiler, options));
+    app.use(webpackHotMiddleware(compiler));
 }

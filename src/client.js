@@ -6,5 +6,4 @@ import 'flexboxgrid'; // load flexbox for grid system
 // import App from './components/Smart/App';
 import {render} from 'react-dom';
 const ROOT = document.getElementById('root');
-
-render(<div>shalom</div>, ROOT);
+render(<div>ok good</div>, ROOT);
