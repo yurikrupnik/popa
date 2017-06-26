@@ -10,7 +10,6 @@ let path = require('path');
 let webpack = require('webpack');
 let BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
-let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 let config = require('./src/config');
 let env = config.env;
@@ -19,11 +18,6 @@ let host = config.host;
 
 let plugins = [
     new ExtractTextPlugin({filename: 'assets/css/[name].css', disable: false, allChunks: false}),
-    new HtmlWebpackPlugin({
-        template: 'index.ejs',
-        filename: 'views/index.ejs',
-        inject: 'body'
-    }),
 ];
 
 if (env === 'development') {
