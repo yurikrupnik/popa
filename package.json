@@ -8,9 +8,9 @@
   },
   "browserslist": [
     ">1%",
-    "last 4 versions",
+    "last 2 versions",
     "Firefox ESR",
-    "not ie < 9"
+    "not ie < 11"
   ],
   "dependencies": {
     "babel-polyfill": "^6.23.0",
@@ -178,14 +178,14 @@
   "scripts": {
     "lint-js": "eslint --ignore-path .gitignore --ignore-pattern \"!**/.*\" .",
     "lint-css": "stylelint \"src/**/*.{css,less,scss,sss}\"",
-    "lint": "yarn run lint-js && yarn run lint-css",
-    "fix-js": "yarn run lint-js -- --fix",
-    "fix-css": "yarn run lint-css -- --fix",
-    "fix": "yarn run fix-js && yarn run fix-css",
+    "lint": "npm run lint-js && npm run lint-css",
+    "fix-js": "npm run lint-js -- --fix",
+    "fix-css": "npm run lint-css -- --fix",
+    "fix": "npm run fix-js && yarn run fix-css",
     "test": "jest",
-    "test-watch": "yarn run test -- --watch --notify",
-    "test-cover": "yarn run test -- --coverage",
-    "coverage": "yarn run test-cover && opn coverage/lcov-report/index.html",
+    "test-watch": "y run test -- --watch --notify",
+    "test-cover": "npm run test -- --coverage",
+    "coverage": "npm run test-cover && opn coverage/lcov-report/index.html",
     "clean": "babel-node tools/run clean",
     "copy": "babel-node tools/run copy",
     "bundle": "babel-node tools/run bundle",

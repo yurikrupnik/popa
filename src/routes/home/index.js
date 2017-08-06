@@ -11,7 +11,9 @@ import React from 'react';
 import Home from './Home';
 import Layout from '../../components/Layout';
 
-async function action() {
+async function action(props, s,d) {
+
+    console.log('props', props);
     // const resp = await fetch('/graphql', {
     //   body: JSON.stringify({
     //     query: '{news{title,link,content}}',
