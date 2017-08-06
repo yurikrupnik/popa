@@ -393,14 +393,14 @@ const serverConfig = {
                     options: {
                         ...rule.options,
                         presets: rule.options.presets.map(preset =>
-                            (preset[0] !== 'env' && preset) || {
+                            (preset[0] !== 'env' ? preset : ['env', {
                                 targets: {
                                     node: pkg.engines.node.match(/(\d+\.?)+/)[0]
                                 },
                                 modules: false,
                                 useBuiltIns: false,
                                 debug: false
-                            },
+                            }])
                         )
                     }
                 };
