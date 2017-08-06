@@ -60,18 +60,18 @@ app.use(bodyParser.json());
 // Error handler for express-jwt
 // app.use((err, req, res, next) => {
 //   eslint-disable-line no-unused-vars
-  // if (err instanceof Jwt401Error) {
-  //   console.error('[express-jwt-error]', req.cookies.id_token);
-  //   `clearCookie`, otherwise user can't use web-app until cookie expires
-    // res.clearCookie('id_token');
-  // }
-  // next(err);
+// if (err instanceof Jwt401Error) {
+//   console.error('[express-jwt-error]', req.cookies.id_token);
+//   `clearCookie`, otherwise user can't use web-app until cookie expires
+// res.clearCookie('id_token');
+// }
+// next(err);
 // });
 //
 // app.use(passport.initialize());
 
 if (__DEV__) {
-  app.enable('trust proxy');
+    app.enable('trust proxy');
 }
 // app.get(
 //   '/login/facebook',
@@ -111,58 +111,58 @@ if (__DEV__) {
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
 app.get('*', async (req, res, next) => {
-  try {
-    const css = new Set();
+    try {
+        const css = new Set();
 
-    // Global (context) variables that can be easily accessed from any React component
-    // https://facebook.github.io/react/docs/context.html
-    const context = {
-      // Enables critical path CSS rendering
-      // https://github.com/kriasoft/isomorphic-style-loader
-      insertCss: (...styles) => {
-        // eslint-disable-next-line no-underscore-dangle
-        styles.forEach(style => css.add(style._getCss()));
-      },
-      // Universal HTTP client
-      fetch: createFetch(fetch, {
-        baseUrl: config.api.serverUrl,
-        cookie: req.headers.cookie,
-      }),
-    };
+        // Global (context) variables that can be easily accessed from any React component
+        // https://facebook.github.io/react/docs/context.html
+        const context = {
+            // Enables critical path CSS rendering
+            // https://github.com/kriasoft/isomorphic-style-loader
+            insertCss: (...styles) => {
+                // eslint-disable-next-line no-underscore-dangle
+                styles.forEach(style => css.add(style._getCss()));
+            },
+            // Universal HTTP client
+            fetch: createFetch(fetch, {
+                baseUrl: config.api.serverUrl,
+                cookie: req.headers.cookie
+            })
+        };
 
-    const route = await router.resolve({
-      ...context,
-      path: req.path,
-      query: req.query,
-    });
+        const route = await router.resolve({
+            ...context,
+            path: req.path,
+            query: req.query
+        });
 
-    if (route.redirect) {
-      res.redirect(route.status || 302, route.redirect);
-      return;
+        if (route.redirect) {
+            res.redirect(route.status || 302, route.redirect);
+            return;
+        }
+
+        const data = { ...route };
+        data.children = ReactDOM.renderToString(
+            <App context={context}>
+                {route.component}
+            </App>,
+        );
+        data.styles = [{ id: 'css', cssText: [...css].join('') }];
+        data.scripts = [assets.vendor.js];
+        if (route.chunks) {
+            data.scripts.push(...route.chunks.map(chunk => assets[chunk].js));
+        }
+        data.scripts.push(assets.client.js);
+        data.app = {
+            apiUrl: config.api.clientUrl
+        };
+
+        const html = ReactDOM.renderToStaticMarkup(<Html {...data} />);
+        res.status(route.status || 200);
+        res.send(`<!doctype html>${html}`);
+    } catch (err) {
+        next(err);
     }
-
-    const data = { ...route };
-    data.children = ReactDOM.renderToString(
-      <App context={context}>
-        {route.component}
-      </App>,
-    );
-    data.styles = [{ id: 'css', cssText: [...css].join('') }];
-    data.scripts = [assets.vendor.js];
-    if (route.chunks) {
-      data.scripts.push(...route.chunks.map(chunk => assets[chunk].js));
-    }
-    data.scripts.push(assets.client.js);
-    data.app = {
-      apiUrl: config.api.clientUrl,
-    };
-
-    const html = ReactDOM.renderToStaticMarkup(<Html {...data} />);
-    res.status(route.status || 200);
-    res.send(`<!doctype html>${html}`);
-  } catch (err) {
-    next(err);
-  }
 });
 
 //
@@ -174,18 +174,18 @@ pe.skipPackage('express');
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  console.error(pe.render(err));
-  const html = ReactDOM.renderToStaticMarkup(
-    <Html
-      title="Internal Server Error"
-      description={err.message}
-      styles={[{ id: 'css', cssText: errorPageStyle._getCss() }]} // eslint-disable-line no-underscore-dangle
-    >
-      {ReactDOM.renderToString(<ErrorPageWithoutStyle error={err} />)}
-    </Html>,
-  );
-  res.status(err.status || 500);
-  res.send(`<!doctype html>${html}`);
+    console.error(pe.render(err));
+    const html = ReactDOM.renderToStaticMarkup(
+        <Html
+            title="Internal Server Error"
+            description={err.message}
+            styles={[{ id: 'css', cssText: errorPageStyle._getCss() }]} // eslint-disable-line no-underscore-dangle
+        >
+            {ReactDOM.renderToString(<ErrorPageWithoutStyle error={err} />)}
+        </Html>,
+    );
+    res.status(err.status || 500);
+    res.send(`<!doctype html>${html}`);
 });
 
 //
@@ -193,19 +193,19 @@ app.use((err, req, res, next) => {
 // -----------------------------------------------------------------------------
 // const promise = models.sync().catch(err => console.error(err.stack));
 if (!module.hot) {
-  // promise.then(() => {
-  //   app.listen(config.port, () => {
-  //     console.info(`The server is running at http://localhost:${config.port}/`);
-  //   });
-  // });
+    // promise.then(() => {
+    app.listen(config.port, () => {
+        console.info(`The server is running at http://localhost:${config.port}/`);
+    });
+    // });
 }
 
 //
 // Hot Module Replacement
 // -----------------------------------------------------------------------------
 if (module.hot) {
-  app.hot = module.hot;
-  module.hot.accept('./router');
+    app.hot = module.hot;
+    module.hot.accept('./router');
 }
 
 export default app;
