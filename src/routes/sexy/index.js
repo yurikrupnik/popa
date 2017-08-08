@@ -12,7 +12,7 @@ import Layout from '../../components/Layout';
 
 function action() {
     return {
-        chunks: ['privacy'],
+        chunks: ['sexy'],
         title: 'sexy',
         component: (
             <Layout>
