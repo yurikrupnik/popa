@@ -1,7 +1,8 @@
 import cookieParser from 'cookie-parser';
 import config from './config';
-
+import './db';
 import app from './app';
+
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
 // user agent is not known.
 // -----------------------------------------------------------------------------

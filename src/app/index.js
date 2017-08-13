@@ -3,6 +3,7 @@ import setters from './setters';
 import logger from './logger';
 import statics from './static';
 import parser from './parser';
+import api from './api';
 import render from './render';
 import error from './error';
 
@@ -11,6 +12,7 @@ logger(app);
 setters(app);
 statics(app);
 parser(app);
+api(app);
 render(app);
 error(app);
 
